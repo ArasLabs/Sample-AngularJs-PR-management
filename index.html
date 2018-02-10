@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app.aras.sample">
+
+<head>
+    <!-- Add Bootstrap style -->
+    <link rel="stylesheet" type="text/css" href="external\bootstrap\css\bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <!-- Add Angular ui notification  -->
+    
+    <link rel="stylesheet" type="text/css" href="external/angular-ui-notification/angular-ui-notification.css" />
+
+</head>
+
+
+<body ng-controller="mainController">
+    <!-- navbar for title and login -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Aras Problem Reports</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <form class="navbar-form navbar-right" ng-show="!connected">
+                    <div class="form-group">
+                            <input type="text" class="form-control" placeholder="database name" ng-model="db">
+                        <input type="text" class="form-control" placeholder="login" ng-model="login">
+                        <input type="password" class="form-control" placeholder="password" ng-model="password">
+                    </div>
+                    <button type="submit" class="btn btn-default" ng-click="connect(db,login,password)">Login</button>
+                </form>
+
+                <form class="navbar-form navbar-right" ng-show="connected">
+                    <button type="submit" class="btn btn-default" ng-click="logout()">Logout</button>
+
+                </form>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+<!-- shade if not logged -->
+<div class="notLogged" ng-show="!connected">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Not logged in</h1>
+            <p>Please log in first</p>
+        </div>
+    </div>
+</div>
+
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <!-- TOP TITLE -->
+            <div class="jumbotron col-md-8">
+                <h1>Problem Reports</h1>
+                <p>Problem report sample application powered by AngularJs and Aras Innovator PLM Solution</p>
+                <p>
+                    <a class="btn btn-primary btn-lg" href="http://community.aras.com" role="button">Learn more</a>
+                </p>
+            </div>
+            <div id="graph" class=" col-md-4">
+                <canvas id="doughnut" class="chart chart-doughnut" chart-data="graph.data" chart-labels="graph.labels" chart-options="graph.options">
+                </canvas>
+            </div>
+        </div>
+
+        <!-- DIV overlay for unlogged users -->
+
+        <!-- tabs -->
+        <div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#listing" aria-controls="listing" role="tab" data-toggle="tab">List</a>
+                </li>
+                <li role="presentation" ng-repeat="pr in prs | filter :{'open':true}">
+                    <a href="#detail{{pr.id}}" aria-controls="detail{{pr.id}}" role="tab" data-toggle="tab">{{pr.item_number}}</a>
+                </li>
+
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="listing">
+                    <!-- table toolbar -->
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-primary">Add</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ref</th>
+                                <th>Created On</th>
+                                <th>State</th>
+                                <th>Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="pr in prs" ng-dblclick="openPr(pr)">
+                                <td>{{pr.item_number}}</td>
+                                <td>{{pr.created_on}}</td>
+                                <td>{{pr.state}}</td>
+                                <td>{{pr.title}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="detail{{pr.id}}" ng-repeat="pr in prs | filter :{'open':true}">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Problem Reports table in first tab -->
+
+        <!-- Open problem reports in other tabs -->
+    </div>
+</body>
+
+<!-- Add AngularJs -->
+<script src='external/angular.min.js'></script>
+
+<!-- Add main angularjs App.js -->
+<script src='app/app.js'></script>
+<script src='app/services/app.items.js'></script>
+<script src='app/services/app.userconfig.js'></script>
+
+
+<!-- Add MD5  -->
+<script src='external/md5.min.js'></script>
+
+<!-- Add JQuery (for bootstrap) -->
+<script src='external/jquery-2.1.1.min.js'></script>
+
+<!-- Add Bootstrap -->
+<script src='external\bootstrap\js\bootstrap.min.js'></script>
+
+<!-- Add Lodash -->
+<script src='external/lodash.min.js'></script>
+
+<!-- Add Lodash -->
+<script src="external/Chart.bundle.js"></script>
+<script src='external/angular-chart.min.js'></script>
+
+<!-- Add Angular ui notification  -->
+<script src='external/angular-ui-notification/angular-ui-notification.js'></script>
+
+</html>
