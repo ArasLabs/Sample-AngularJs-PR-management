@@ -33,9 +33,9 @@ AngularJS is a JavaScript-based open-source front-end web application framework 
 1. Go to your new application http://(ServerName)/(ArasAppName)/(TheAliasYouSelected) (ex: http://localhost/11SP12/Angular)
 2. At the top type the database name, the login and the password
 
-![Logged Out View](./screenshots/loggedOutView.PNG)
-![Main View](./screenshots/GeneralView.PNG)
-![PR Edition View](./screenshots/PrEditView.PNG)
+![Logged Out View](./screenshots/loggedOutView.PNG "Logged Out View")
+![Main View](./screenshots/GeneralView.PNG "Main View")
+![PR Edition View](./screenshots/PrEditView.PNG "PR Edition View")
 
 ## dependencies
 
