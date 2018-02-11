@@ -41,16 +41,16 @@ angular.module("app.aras.sample", [
     .controller('mainController', function ($scope, arasData, userLocal, Notification) {
 
         $scope.connected = false
-        $scope.dataInit = ()=>{
+        $scope.dataInit = () => {
             $scope.prs = []
             $scope.graph = { labels: [], data: [] }
             $scope.counters = []
-            $scope.prSelected={}
+            $scope.prSelected = {}
         }
 
         $scope.dataInit()
 
-        $scope.prSelect = (pr)=>{
+        $scope.prSelect = (pr) => {
             $scope.prSelected = pr
         }
 
@@ -58,69 +58,74 @@ angular.module("app.aras.sample", [
             var prRequest = arasData.problemReport.get().then((data) => {
                 console.log(data)
                 $scope.prs = data
-
-                //////////////////////////////////////////////////////////////
-                //  Graphs generation
-                //////////////////////////////////////////////////////////////
-
-
-                $scope.counters = _.countBy($scope.prs, 'state')
-                for (var prop in $scope.counters) {
-                    $scope.graph.labels.push(prop)
-                    $scope.graph.data.push($scope.counters[prop])
-                }
-
-                $scope.graph.options = {
-                    legend: {
-                        display: true,
-                        labels: {
-                            fontColor: 'rgb(255, 99, 132)'
-                        }
-                    }
-                }
-                console.log($scope.graph)
+                $scope.refreshGraphData()
             })
         }
 
+        $scope.refreshGraphData = () => {
 
-        $scope.addPr = ()=> {
-            
+            $scope.graph = { labels: [], data: [] }
+            $scope.counters = []
+            //////////////////////////////////////////////////////////////
+            //  Graphs generation
+            //////////////////////////////////////////////////////////////
+            $scope.counters = _.countBy($scope.prs, 'state')
+            for (var prop in $scope.counters) {
+                $scope.graph.labels.push(prop)
+                $scope.graph.data.push($scope.counters[prop])
+            }
+
+            $scope.graph.options = {
+                legend: {
+                    display: true,
+                    labels: {
+                        fontColor: 'rgb(255, 99, 132)'
+                    }
+                }
+            }
+            console.log($scope.graph)
+        }
+
+        $scope.addPr = () => {
+
             var prRequest = arasData.problemReport.add().then((data) => {
                 console.log(data)
-                if (data){
+                if (data) {
                     console.log(data)
                     data.open = true
                     $scope.prs.push(data)
+                    $scope.refreshGraphData()
                 }
             })
         }
 
-        $scope.removePr = (prId)=> {
+        $scope.removePr = (prId) => {
             var prRequest = arasData.problemReport.delete(prId).then((data) => {
                 console.log(data)
-                if (!data.isError){
+                if (!data.isError) {
                     _.remove($scope.prs, {
                         id: prId
                     });
-                }else {
+                    $scope.refreshGraphData()
+                } else {
                     Notification.error(data.error)
                 }
             })
         }
 
-        $scope.updatePr = (pr)=>{
-            
+        $scope.updatePr = (pr) => {
+
             var prRequest = arasData.problemReport.patch(pr).then((data) => {
                 console.log(data)
-                if (!data.isError){
+                if (!data.isError) {
                     Notification.success(pr.item_number + " has been updated")
-                }else {
+                } else {
                     Notification.error(data.error)
                 }
             })
         }
 
-        $scope.closePr=(pr)=>{
+        $scope.closePr = (pr) => {
             pr.open = false
         }
 
@@ -146,7 +151,7 @@ angular.module("app.aras.sample", [
             Notification.primary('Logged Out')
             $scope.dataInit()
         }
-        
+
         $scope.connectionTry = () => {
             // test query (just using the problemReport query, not clean though but works for the sample)
             arasData.problemReport.get()
@@ -163,7 +168,7 @@ angular.module("app.aras.sample", [
                 })
         }
 
-        
+
 
         $scope.connect = (db, login, password) => {
             // produce md5
