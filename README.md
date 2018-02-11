@@ -1,5 +1,6 @@
 # Sample-AngularJs-PR-management
 This is a sample AngularJs client application to demonstrate the use of the REST/oData web service interface introduced in Aras Innovator 11 SP12
+
 #### How it works
 AngularJS is a JavaScript-based open-source front-end web application framework mainly maintained by Google and by a community of individuals and corporations to address many of the challenges encountered in developing single-page applications. Aras Innovator 11 SP12 introduced a REST/oData web service interface which is a great fit with all the moderns javascript-based front-end web application frameworks.
 
@@ -33,11 +34,14 @@ AngularJS is a JavaScript-based open-source front-end web application framework 
 1. Go to your new application http://(ServerName)/(ArasAppName)/(TheAliasYouSelected) (ex: http://localhost/11SP12/Angular)
 2. At the top type the database name, the login and the password
 
+* Logged Out View
 ![Logged Out View](./screenshots/loggedOutView.PNG "Logged Out View")
+* Main View
 ![Main View](./screenshots/GeneralView.PNG "Main View")
+* PR Edition View
 ![PR Edition View](./screenshots/PrEditView.PNG "PR Edition View")
 
-## dependencies
+## Dependencies
 
 - angularJS
 - Bootstrap
