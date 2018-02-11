@@ -1,0 +1,13 @@
+<form>
+    <div class="form-group">
+      <label for="inputPrNumber">Pr Number</label>
+      <input type="text" class="form-control" id="inputPrNumber" placeholder="PR Number" ng-model="pr.item_number" disabled>
+    </div>
+    <div class="form-group">
+      <label for="inputTitle">Title</label>
+      <input type="text" class="form-control" id="inputTitle" placeholder="Problem Report Title" ng-model="pr.title">
+    </div>
+    <button type="submit" class="btn btn-warning"  ng-click="updatePr(pr)"><span class="glyphicon glyphicon-floppy-disk" ></span> save</button>
+    <button type="submit" class="btn btn-danger" ng-click="removePr(pr.id)"><span class="glyphicon glyphicon-trash " ></span> delete</button>
+    <button type="submit" class="btn btn-info" ng-click="closePr(pr)" ><span class="glyphicon glyphicon-remove" ></span> close</button>
+  </form>

@@ -45,10 +45,14 @@ angular.module("app.aras.sample", [
             $scope.prs = []
             $scope.graph = { labels: [], data: [] }
             $scope.counters = []
+            $scope.prSelected={}
         }
 
         $scope.dataInit()
 
+        $scope.prSelect = (pr)=>{
+            $scope.prSelected = pr
+        }
 
         $scope.getPrs = () => {
             var prRequest = arasData.problemReport.get().then((data) => {
@@ -77,6 +81,49 @@ angular.module("app.aras.sample", [
                 console.log($scope.graph)
             })
         }
+
+
+        $scope.addPr = ()=> {
+            
+            var prRequest = arasData.problemReport.add().then((data) => {
+                console.log(data)
+                if (data){
+                    console.log(data)
+                    data.open = true
+                    $scope.prs.push(data)
+                }
+            })
+        }
+
+        $scope.removePr = (prId)=> {
+            var prRequest = arasData.problemReport.delete(prId).then((data) => {
+                console.log(data)
+                if (!data.isError){
+                    _.remove($scope.prs, {
+                        id: prId
+                    });
+                }else {
+                    Notification.error(data.error)
+                }
+            })
+        }
+
+        $scope.updatePr = (pr)=>{
+            
+            var prRequest = arasData.problemReport.patch(pr).then((data) => {
+                console.log(data)
+                if (!data.isError){
+                    Notification.success(pr.item_number + " has been updated")
+                }else {
+                    Notification.error(data.error)
+                }
+            })
+        }
+
+        $scope.closePr=(pr)=>{
+            pr.open = false
+        }
+
 
         $scope.$watch('connected', (newValue, oldValue) => {
             console.log(oldValue)

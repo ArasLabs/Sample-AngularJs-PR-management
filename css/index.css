@@ -12,3 +12,12 @@
     text-align: center;
     padding-top: 10%;
 }
+
+.tab-content {
+    margin-top: 20px;
+}
+
+tr.selected {
+    background-color: lightpink;
+    font-weight: bold;
+}
